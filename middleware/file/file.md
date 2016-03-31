@@ -21,8 +21,8 @@ TSIG key configuration.
 
 ~~~
 file dbfile [zones... ] {
-    transfer in|out|both [address...] {
-
+    transfer in|out|both {
+        notify address... [key name base64 [alg]]
     }
 }
 ~~~
