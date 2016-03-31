@@ -20,7 +20,7 @@ func Notify(zone string, remotes []string) error {
 	m.SetNotify(zone)
 	c := new(dns.Client)
 
-	// TODO(miek): error handling?
+	// TODO(miek): error handling? Run this in a goroutine?
 	for _, remote := range remotes {
 		notifyRemote(c, m, remote)
 	}
