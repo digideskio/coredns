@@ -17,13 +17,11 @@ file dbfile [zones...]
 
 If you want to round robin A and AAAA responses look at the `loadbalance` middleware.
 
-TSIG key configuration.
+TSIG key configuration is TODO; directive format will change.
 
 ~~~
 file dbfile [zones... ] {
-    transfer in|out|both {
-        notify address... [key name base64 [alg]]
-    }
+    transfer out [address...]
 }
 ~~~
 

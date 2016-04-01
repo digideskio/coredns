@@ -7,22 +7,22 @@ import (
 	"github.com/miekg/dns"
 )
 
-// Notify will ...
-func (z *Zone) Notify() error {
-	return nil
+// Notify will send notifies to all configured IP addresses.
+func (z *Zone) Notify() {
+	go notify(z.name, z.Peers)
 }
 
-// Notify sends notifies to the configured remotes. It will try up to three times
+// notify sends notifies to the configured remotes. It will try up to three times
 // before giving up on a specific remote. We will sequentially loop through the remotes
 // until they all have replied (or have 3 failed attempts).
-func Notify(zone string, remotes []string) error {
+func notify(zone string, remotes []string) error {
 	m := new(dns.Msg)
 	m.SetNotify(zone)
 	c := new(dns.Client)
 
 	// TODO(miek): error handling? Run this in a goroutine?
 	for _, remote := range remotes {
-		notifyRemote(c, m, remote)
+		notifyRemote(c, m, middleware.Addr(remote).Standard())
 	}
 	return nil
 }
